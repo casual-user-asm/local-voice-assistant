@@ -1,4 +1,47 @@
-venv
-.venv
-.vscode
-TTS
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# macOS system files
+.DS_Store
+
+# VS Code settings
+.vscode/
+
+# PyCharm settings
+.idea/
+
+# Logs and outputs
+*.log
+
+# Audio output or temp files
+*.wav
+*.mp3
+*.ogg
+*.flac
+
+# Local models or large data files
+models/
+*.bin
+*.pth
+*.pt
+*.onnx
+
+# Token / API config
+.env
+*.env
+config.json
+secrets.json
+
+# OS-specific
+Thumbs.db
+desktop.ini
