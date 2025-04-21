@@ -1,6 +1,6 @@
 import subprocess
 
-
+# Need to improve perfomance of AI response. This may be because of large response of model, but who knows, right?
 def get_model_response(prompt):
     try:
         process = subprocess.Popen(
