@@ -7,4 +7,4 @@ Whisper – for Speech-to-Text (STT). It listens to your voice and converts it t
 
 Ollama – runs the local LLM (Large Language Model) for generating responses.
 
-pyttsx3 – handles Text-to-Speech (TTS), so the assistant can speak replies out loud.
+Coqui.ai TTS – handles Text-to-Speech (TTS), so the assistant can speak replies out loud.
