@@ -2,20 +2,44 @@ import sounddevice as sd
 import scipy.io.wavfile as wav
 import whisper
 import tempfile
+import numpy as np
+import keyboard
 
-# Need to change logic of record voice. Must record voice for example on click some button. Instead of limited duration, this should 
-# record until we hold the button.
-def record_audio(duration=5, samplerate=16000):
-    print(f"🎤 Recording for {duration} seconds...")
-    recording = sd.rec(int(duration * samplerate), samplerate=samplerate, channels=1, dtype='int16')
-    sd.wait()
-    
+model = whisper.load_model("tiny")
+
+
+def record_audio(samplerate=16000):
+    print("🎤 Hold SPACEBAR to record... release to stop.")
+
+    frames = []
+    recording = False
+
+    def callback(indata, frames_count, time_info, status):
+        if recording:
+            frames.append(indata.copy())
+
+    stream = sd.InputStream(samplerate=samplerate, channels=1, dtype='int16', callback=callback)
+
+    with stream:
+        while True:
+            if keyboard.is_pressed("space"):
+                if not recording:
+                    print("🎙️ Recording started...")
+                    recording = True
+                sd.sleep(100)
+            elif recording:
+                print("🛑 Recording stopped.")
+                break
+            else:
+                sd.sleep(100)
+
+    audio = np.concatenate(frames, axis=0)
+
     temp_wav = tempfile.NamedTemporaryFile(suffix=".wav", delete=False)
-    wav.write(temp_wav.name, samplerate, recording)
+    wav.write(temp_wav.name, samplerate, audio)
     return temp_wav.name
 
 def transcribe_audio(file_path):
     print("🧠 Transcribing with Whisper...\n")
-    model = whisper.load_model("tiny")  # Options: tiny, base, small, medium, large
-    result = model.transcribe(file_path)
+    result = model.transcribe(file_path, language="en")
     return result["text"]
