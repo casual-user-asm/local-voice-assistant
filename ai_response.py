@@ -12,6 +12,8 @@ def get_response(conversation):
     try:
         res = requests.post(url, json=payload)
 
-        return res.json()["message"]["content"].strip()
+        return res.json()["message"]["content"].strip().replace("*", "")
+    except requests.ConnectionError:
+        print("Problem with AI model server. Is Ollama running?")
     except Exception as e:
         return f'Error: {e}'
