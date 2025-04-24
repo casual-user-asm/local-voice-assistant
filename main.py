@@ -13,7 +13,7 @@ def signal_handler(sig, frame):
 
 signal.signal(signal.SIGINT, signal_handler)
 
-#  Write a function to remove * from AI response
+
 if __name__ == "__main__":
     conversation = []
     while True:
